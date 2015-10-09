@@ -1,8 +1,7 @@
-package piece
+package chess_objects
 
 type Piece struct{
     
-    PieceType int
-    PieceLocationX, PieceLocationY int
+    Type int
 
 }
