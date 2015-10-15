@@ -6,10 +6,13 @@ import (
 		)
 
 func main(){
+
 	board := objects.Board{}
 	board.New()
-
-	
-	fmt.Println(board.Board[8])
-
+    
+	for _,element := range board.Pieces {
+        if element.Location.X == 4{
+            fmt.Println(element.Type)
+        }
+    }
 }
