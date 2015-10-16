@@ -11,7 +11,7 @@ func main(){
 	b.New()
     piece := b.Board[3][2].Piece
 
-    piece.Move_piece(b.Board[5][4])
+    piece.Move_piece(b.Board[4][2], &b)
     printBoard(&b)	
 }
 
