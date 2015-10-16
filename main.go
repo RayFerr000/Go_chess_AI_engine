@@ -7,15 +7,18 @@ import (
 
 func main(){
 
-	board := objects.Board{}
-	board.New()
-    printBoard(&board)	
+	b := objects.Board{}
+	b.New()
+    piece := b.Board[3][2].Piece
+
+    piece.Move_piece(b.Board[5][4])
+    printBoard(&b)	
 }
 
 func printBoard(b * objects.Board){
 
-    for i := 2; i <= 9; i++{
-        for j := 2; j <= 9; j++{
+    for i := 9; i >= 2; i--{
+        for j := 9; j >= 2; j--{
             if b.Board[i][j].HasPiece == true{
                 if b.Board[i][j].Piece.Type > 0{
                     fmt.Print(b.Board[i][j].Piece.Type)
