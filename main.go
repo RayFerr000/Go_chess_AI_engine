@@ -9,9 +9,12 @@ func main(){
 
 	b := objects.Board{}
 	b.New()
-    piece := b.Board[3][2].Piece
+    piece1 := b.Board[3][2].Piece // pawn
+    piece2 := b.Board[2][3].Piece // knight
 
-    piece.Move_piece(b.Board[4][2], &b)
+    piece1.Move_piece(b.Board[4][2], &b)
+    piece2.Move_piece(b.Board[4][4], &b)
+    piece2.Move_piece(b.Board[6][5], &b)
     printBoard(&b)	
 }
 
