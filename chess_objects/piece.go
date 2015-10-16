@@ -27,23 +27,23 @@ func (piece *Piece) Move_piece(newSquare *Square, board *Board){
 
 //validate_move determines if moving any piece from currentSquare to newSquare is a valid move.
 func validate_move(currentSquare *Square, newSquare *Square, board *Board, pieceType int) bool{
-	oldX := currentSquare.X
-	oldY := currentSquare.Y
-	newX := newSquare.X
-	newY := newSquare.Y
+
     switch{
         
         case math.Abs(float64(pieceType)) == 1:  //pawn
-        	return valid_pawn_move(oldX, oldY, newX, newY)
+        	return valid_pawn_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y)
         
-        case math.Abs(float64(pieceType)) == 2:
-        	return valid_knight_move(oldX, oldY, newX, newY)
-        /**
-        case math.Abs(float64(pieceType)) == 2:
-        case math.Abs(float64(pieceType)) == 2:
-        case math.Abs(float64(pieceType)) == 2:
-        case math.Abs(float64(pieceType)) == 2:
-*/
+        case math.Abs(float64(pieceType)) == 2:  //knight
+        	return valid_knight_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y)
+
+        case math.Abs(float64(pieceType)) == 4: //castle
+        	if currentSquare.X == newSquare.X{  //horizontal castle move
+        		return valid_castle_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, board.get_row(currentSquare.X))
+        	
+        	} else if currentSquare.Y == newSquare.Y {  //vertical castle move
+        		return valid_castle_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, board.get_column(currentSquare.Y))
+            
+            } else { return false } 
     }
     return false
 }
@@ -59,7 +59,7 @@ func valid_pawn_move(oldX int, oldY int, newX int, newY int) bool{
 	}
 }
 
-//valid_knight_move determines if this is a knight pawn move.
+//valid_knight_move determines if this is a valid knight move.
 func valid_knight_move(oldX int, oldY int, newX int, newY int) bool{
 	cond1 := (math.Abs(float64(newX)) - math.Abs(float64(oldX))) == 2.0 && (math.Abs(float64(newY)) - math.Abs(float64(oldY))) == 1.0 //Two horiontal one vertical
 	cond2 := (math.Abs(float64(newX)) - math.Abs(float64(oldX))) == 1.0 && (math.Abs(float64(newY)) - math.Abs(float64(oldY))) == 2.0 //Two vertical one horizontal
@@ -69,5 +69,17 @@ func valid_knight_move(oldX int, oldY int, newX int, newY int) bool{
 		fmt.Println("Not a valid knight move")
 		return false
 	}
+}
+
+//valid_castle_move determines if this is a valid castle move.
+func valid_castle_move(oldX int, oldY int, newX int, newY int, pathToNewSquare [8]*Square) bool{
+	fmt.Println(pathToNewSquare[2])
+	/**for _,square := range pathToNewSquare{
+		if square.X == newX && square.Y == newY{  //arrived at destination square. Check if a piece is currently there
+			if square.HasPiece == { return false }
+			return true
+		}
+	}*/
+	return false
 
 }

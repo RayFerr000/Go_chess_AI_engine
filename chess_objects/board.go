@@ -108,4 +108,24 @@ func (b *Board) New(){
         }
     }
 }
+//get_column returns a specific column from the board.
+func (b *Board) get_column(column int) [8]*Square{
+    var tmp [8]*Square
+    pos := 0
+    for i:= 2; i <= 9; i++{
+        tmp[pos] = b.Board[i][column]
+        pos++
+    }
+    return tmp
+}
+
+func (b *Board) get_row(row int) [8]*Square{
+    var tmp [8]*Square
+    pos := 0
+    for i:= 2; i <= 9; i++{
+        tmp[pos] = b.Board[row][i]
+        pos++
+    }
+    return tmp    
+}
 
