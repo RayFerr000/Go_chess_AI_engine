@@ -38,10 +38,10 @@ func validate_move(currentSquare *Square, newSquare *Square, board *Board, piece
 
         case math.Abs(float64(pieceType)) == 4: //castle
         	if currentSquare.X == newSquare.X{  //horizontal castle move
-        		return valid_castle_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, board.get_row(currentSquare.X))
+        		return valid_castle_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, board.get_horizontal_path(currentSquare, newSquare))
         	
         	} else if currentSquare.Y == newSquare.Y {  //vertical castle move
-        		return valid_castle_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, board.get_column(currentSquare.Y))
+        		return valid_castle_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, board.get_vertical_path(currentSquare, newSquare))
             
             } else { return false } 
     }
@@ -71,9 +71,12 @@ func valid_knight_move(oldX int, oldY int, newX int, newY int) bool{
 	}
 }
 
-//valid_castle_move determines if this is a valid castle move.
-func valid_castle_move(oldX int, oldY int, newX int, newY int, pathToNewSquare [8]*Square) bool{
-	fmt.Println(pathToNewSquare[2])
+//valid_castle_move determines if this is a valid castle move. pathToNewSquare is the row/column that the castle is moving along.
+func valid_castle_move(oldX int, oldY int, newX int, newY int, pathToNewSquare []*Square) bool{
+	for _,element := range pathToNewSquare{
+		fmt.Println(*element)
+
+	}
 	/**for _,square := range pathToNewSquare{
 		if square.X == newX && square.Y == newY{  //arrived at destination square. Check if a piece is currently there
 			if square.HasPiece == { return false }
