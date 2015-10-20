@@ -34,7 +34,7 @@ func printBoard(b * objects.Board){
                     fmt.Print(" ")
                 }
             }else{
-                fmt.Print("X  ")
+                fmt.Print("O  ")
             }
 
         }

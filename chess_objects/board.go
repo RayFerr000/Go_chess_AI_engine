@@ -1,6 +1,5 @@
 package chess_objects
 
-import "fmt"
 
 type Board struct{
 
@@ -128,32 +127,5 @@ func (b *Board) get_row(row int) [8]*Square{
     }
     return tmp    
 }
-//get_horizontal_path goes to the row the s1 and s2 are on and finds all squares that are between them.
-func (b*Board) get_horizontal_path(s1 *Square , s2 *Square) []*Square{
-    var low, hi int = s1.Y, s2.Y  //variables to grab slice.
-    
-    if s1.Y > s2.Y{ 
-        low, hi = s2.Y, s1.Y
-    }
-    
-    row := b.get_row(s1.X)
-    var tmp []*Square = row[low:hi]
-    return tmp
-}
-//get_vertical_path goes to the column the s1 and s2 are on and finds all squares that are between them.
-func (b*Board) get_vertical_path(s1 *Square , s2 *Square) []*Square{
-    var i, j, k = 0,0,1  //Variables to control our loop since we don't know which way we are traversing the column. Default is bottom -> top
-    
-    if s1.X > s2.X {  //Check for top -> bottom traversal
-        i, k = 7,-1
-    }
-    tmp := []*Square
-    row := b.get_column(s1.Y)
-    for true{
-        if (row[i].X == s1.X && row[i].Y == s1.Y) || (row[i].X == s2.X && row[i].Y == s2.Y){
-            
-        }
-    }
-    return tmp
-}
+
 

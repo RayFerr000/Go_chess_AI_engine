@@ -38,10 +38,10 @@ func validate_move(currentSquare *Square, newSquare *Square, board *Board, piece
 
         case math.Abs(float64(pieceType)) == 4: //castle
         	if currentSquare.X == newSquare.X{  //horizontal castle move
-        		return valid_castle_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, board.get_horizontal_path(currentSquare, newSquare))
+        		return valid_castle_move(currentSquare, newSquare, board.get_row(currentSquare.X))
         	
         	} else if currentSquare.Y == newSquare.Y {  //vertical castle move
-        		return valid_castle_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, board.get_vertical_path(currentSquare, newSquare))
+        		return valid_castle_move(currentSquare, newSquare, board.get_column(currentSquare.Y))
             
             } else { return false } 
     }
@@ -72,17 +72,32 @@ func valid_knight_move(oldX int, oldY int, newX int, newY int) bool{
 }
 
 //valid_castle_move determines if this is a valid castle move. pathToNewSquare is the row/column that the castle is moving along.
-func valid_castle_move(oldX int, oldY int, newX int, newY int, pathToNewSquare []*Square) bool{
-	for _,element := range pathToNewSquare{
-		fmt.Println(*element)
-
+func valid_castle_move(currentSquare *Square, newSquare *Square, path [8]*Square) bool{
+	
+	i, j, k := 0,7,1  //Variables to control our loop.
+	startSquare, endSquare := currentSquare, newSquare
+	if currentSquare.Y > newSquare.Y || currentSquare.X > newSquare.X{  //Determining direction in which we are going to traverse the row/column.
+		i, j, k = 7,0,-1		
 	}
-	/**for _,square := range pathToNewSquare{
-		if square.X == newX && square.Y == newY{  //arrived at destination square. Check if a piece is currently there
-			if square.HasPiece == { return false }
-			return true
+	for i != j {
+		square := path[i]
+		if square == startSquare{  //Found the first square in our path so now check to see if path is clear or not.
+			
+			for square != endSquare{
+				
+				if (square != currentSquare) && (square.HasPiece == true){
+					return false
+				}
+				i += k
+				square = path[i]	
+			}
+
+			if square.HasPiece == false { return true }
+		} else {
+			i += k
+			square = path[i]
 		}
-	}*/
+	}
 	return false
 
 }
