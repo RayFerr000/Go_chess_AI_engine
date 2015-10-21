@@ -36,11 +36,14 @@ func validate_move(currentSquare *Square, newSquare *Square, board *Board, piece
         case math.Abs(float64(pieceType)) == 2:  //knight
         	return valid_knight_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y)
 
+        case math.Abs(float64(pieceType)) == 3:  //bishop
+        	return validate_bishop_move(board.valid_diagonal_path(currentSquare, newSquare))
+
         case math.Abs(float64(pieceType)) == 4: //castle
         	if currentSquare.X == newSquare.X{  //horizontal castle move
         		return valid_castle_move(currentSquare, newSquare, board.get_row(currentSquare.X))
         	
-        	} else if currentSquare.Y == newSquare.Y {  //vertical castle move
+        	} else if currentSquare.Y == newSquare.Y{  //vertical castle move
         		return valid_castle_move(currentSquare, newSquare, board.get_column(currentSquare.Y))
             
             } else { return false } 
@@ -73,7 +76,6 @@ func valid_knight_move(oldX int, oldY int, newX int, newY int) bool{
 
 //valid_castle_move determines if this is a valid castle move. pathToNewSquare is the row/column that the castle is moving along.
 func valid_castle_move(currentSquare *Square, newSquare *Square, path [8]*Square) bool{
-	
 	i, j, k := 0,7,1  //Variables to control our loop.
 	startSquare, endSquare := currentSquare, newSquare
 	if currentSquare.Y > newSquare.Y || currentSquare.X > newSquare.X{  //Determining direction in which we are going to traverse the row/column.
@@ -82,16 +84,13 @@ func valid_castle_move(currentSquare *Square, newSquare *Square, path [8]*Square
 	for i != j {
 		square := path[i]
 		if square == startSquare{  //Found the first square in our path so now check to see if path is clear or not.
-			
-			for square != endSquare{
-				
+			for square != endSquare{	
 				if (square != currentSquare) && (square.HasPiece == true){
 					return false
 				}
 				i += k
 				square = path[i]	
 			}
-
 			if square.HasPiece == false { return true }
 		} else {
 			i += k
@@ -99,5 +98,18 @@ func valid_castle_move(currentSquare *Square, newSquare *Square, path [8]*Square
 		}
 	}
 	return false
-
 }
+
+func validate_bishop_move(validPath bool) bool{
+	return validPath
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,8 @@
 package chess_objects
-
+import (
+        "math"
+        "fmt"
+       )
 
 type Board struct{
 
@@ -126,6 +129,32 @@ func (b *Board) get_row(row int) [8]*Square{
         pos++
     }
     return tmp    
+}
+// valid_diagonal_path will determine is a diagonal path is a valid move. Used for bishops and queens.
+func (b *Board) valid_diagonal_path(currentSquare *Square, newSquare *Square) bool{
+    if ( math.Abs(float64(newSquare.X - currentSquare.X)) != math.Abs(float64(newSquare.Y - currentSquare.Y)) ){  // bishop paths must be of slope = +1 or -1
+        return false
+    } 
+    xDirection := 1
+    yDirection := 1
+    if newSquare.X - currentSquare.X < 0 { xDirection = -1 }  // determine which direction this piece is moving
+    if newSquare.Y - currentSquare.Y < 0 { yDirection = -1 }
+
+    i := currentSquare.X
+    j := currentSquare.Y
+    
+    square := b.Board[i + xDirection][j + yDirection]
+    for square != newSquare {
+        if ( square.HasPiece == false ){
+            i = square.X
+            j = square.Y
+            square = b.Board[i + xDirection][j + yDirection]
+        } else {
+            fmt.Println("Not a valid bishop move")
+            return false
+        }
+    }
+    return true
 }
 
 
