@@ -9,12 +9,13 @@ type Piece struct{
     Type int
     Location *Square
     Captured bool
+    IsWhite bool
 
 }
 
 //Move a piece from its current square to a new one if it is a valid move.
 func (piece *Piece) Move_piece(newSquare *Square, board *Board){
-	if newSquare.HasPiece || newSquare.OutOfBounds || !validate_move(piece.Location, newSquare, board, piece.Type){
+	if newSquare.HasPiece || newSquare.OutOfBounds || !validate_move(piece.Location, newSquare, board, piece.Type, piece.IsWhite){
 		fmt.Println("Not a valid move.")
 		return
 	}
@@ -26,12 +27,12 @@ func (piece *Piece) Move_piece(newSquare *Square, board *Board){
 }
 
 //validate_move determines if moving any piece from currentSquare to newSquare is a valid move.
-func validate_move(currentSquare *Square, newSquare *Square, board *Board, pieceType int) bool{
+func validate_move(currentSquare *Square, newSquare *Square, board *Board, pieceType int, isWhite bool) bool{
 
     switch{
         
         case math.Abs(float64(pieceType)) == 1:  //pawn
-        	return valid_pawn_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y)
+        	return valid_pawn_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, isWhite)
         
         case math.Abs(float64(pieceType)) == 2:  //knight
         	return valid_knight_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y)
@@ -52,15 +53,20 @@ func validate_move(currentSquare *Square, newSquare *Square, board *Board, piece
 }
 
 //valid_pawn_move determines if this is a valid pawn move.
-func valid_pawn_move(oldX int, oldY int, newX int, newY int) bool{
-    
-    if (newX - oldX == 1) && (oldY == newY){
-		return true
-	}else{
-		fmt.Println("Not a valid pawn move")
-		return false
-	}
+func valid_pawn_move(oldX int, oldY int, newX int, newY int, isWhite bool) bool{
+    if isWhite{
+    	if ( (newX - oldX == 1) && (oldY == newY) ) || ( (newX - oldX) == 2) && (oldY == newY) && (oldX == 3){
+			return true
+        } else { return false}
+    //If it's not white, than it is black.
+    } else{
+    	if ( (newX - oldX) == -1 && (oldY == newY) ) || ( (newX - oldX) == -2) && (oldY == newY) && (oldX == 8){
+			return true
+    	} else { return false }
+    }
+	return false
 }
+
 
 //valid_knight_move determines if this is a valid knight move.
 func valid_knight_move(oldX int, oldY int, newX int, newY int) bool{
@@ -91,7 +97,7 @@ func valid_castle_move(currentSquare *Square, newSquare *Square, path [8]*Square
 				i += k
 				square = path[i]	
 			}
-			if square.HasPiece == false { return true }
+			return true
 		} else {
 			i += k
 			square = path[i]
