@@ -9,8 +9,10 @@ func main(){
 
 	b := objects.Board{}
 	b.New()
-    piece1 := b.Board[3][2].Piece  //  White pawn
-    piece2 := b.Board[8][2].Piece  //  White pawn
+    piece1 := b.Board[3][6].Piece  //  White pawn
+    piece2 := b.Board[8][6].Piece  //  black pawn
+    piece3 := b.Board[2][6].Piece  //  White king
+    piece4 := b.Board[9][6].Piece  //  black king
 
     /*
     piece1_2 := b.Board[3][5].Piece  // pawn
@@ -19,8 +21,14 @@ func main(){
     piece3 := b.Board[2][2].Piece  // castle
     piece4 := b.Board[2][4].Piece  //bishop
     */
-    piece1.Move_piece(b.Board[4][2], &b)
-    piece2.Move_piece(b.Board[6][2], &b)
+    piece1.Move_piece(b.Board[5][6], &b)
+    piece2.Move_piece(b.Board[6][6], &b)
+    piece3.Move_piece(b.Board[3][6], &b)
+    piece4.Move_piece(b.Board[8][6], &b)
+    piece3.Move_piece(b.Board[4][6], &b)
+    piece4.Move_piece(b.Board[7][6], &b)
+    piece3.Move_piece(b.Board[3][6], &b)
+    piece4.Move_piece(b.Board[8][6], &b)
     /*
     piece1.Move_piece(b.Board[6][2], &b)
     piece1_2.Move_piece(b.Board[4][5], &b)

@@ -15,7 +15,7 @@ type Piece struct{
 
 //Move a piece from its current square to a new one if it is a valid move.
 func (piece *Piece) Move_piece(newSquare *Square, board *Board){
-	if newSquare.HasPiece || newSquare.OutOfBounds || !validate_move(piece.Location, newSquare, board, piece.Type, piece.IsWhite){
+	if newSquare.HasPiece || newSquare.OutOfBounds || !validate_move(piece.Location, newSquare, board, piece.Type){
 		fmt.Println("Not a valid move.")
 		return
 	}
@@ -27,12 +27,12 @@ func (piece *Piece) Move_piece(newSquare *Square, board *Board){
 }
 
 //validate_move determines if moving any piece from currentSquare to newSquare is a valid move.
-func validate_move(currentSquare *Square, newSquare *Square, board *Board, pieceType int, isWhite bool) bool{
+func validate_move(currentSquare *Square, newSquare *Square, board *Board, pieceType int) bool{
 
     switch{
         
         case math.Abs(float64(pieceType)) == 1:  //pawn
-        	return valid_pawn_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, isWhite)
+        	return valid_pawn_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y, currentSquare.Piece.IsWhite)
         
         case math.Abs(float64(pieceType)) == 2:  //knight
         	return valid_knight_move(currentSquare.X, currentSquare.Y, newSquare.X, newSquare.Y)
@@ -47,7 +47,9 @@ func validate_move(currentSquare *Square, newSquare *Square, board *Board, piece
         	} else if currentSquare.Y == newSquare.Y{  //vertical castle move
         		return valid_castle_move(currentSquare, newSquare, board.get_column(currentSquare.Y))
             
-            } else { return false } 
+            } else { return false }
+        case math.Abs(float64(pieceType)) == 6:  //king
+        	return validate_king_move(currentSquare, newSquare)
     }
     return false
 }
@@ -108,6 +110,13 @@ func valid_castle_move(currentSquare *Square, newSquare *Square, path [8]*Square
 
 func validate_bishop_move(validPath bool) bool{
 	return validPath
+}
+
+// validate_king_move determines if this is a valid king move
+func validate_king_move(currentSquare *Square, newSquare *Square) bool{
+	if math.Abs(float64(currentSquare.X - newSquare.X)) <= 1 && math.Abs(float64(currentSquare.Y - newSquare.Y)) <=1{
+		return true
+	} else { return false }
 }
 
 
