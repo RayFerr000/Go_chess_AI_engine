@@ -48,6 +48,15 @@ func validate_move(currentSquare *Square, newSquare *Square, board *Board, piece
         		return valid_castle_move(currentSquare, newSquare, board.get_column(currentSquare.Y))
             
             } else { return false }
+        case math.Abs(float64(pieceType)) == 5:  //queen
+
+        	if validate_move(currentSquare, newSquare, board, 1) || 
+        	   validate_move(currentSquare, newSquare, board, 3) ||
+        	   validate_move(currentSquare, newSquare, board, 4) ||
+        	   validate_move(currentSquare, newSquare, board, 5){
+        	   	return true
+        	   } else { return false}
+        
         case math.Abs(float64(pieceType)) == 6:  //king
         	return validate_king_move(currentSquare, newSquare)
     }

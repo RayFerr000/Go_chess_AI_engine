@@ -2,34 +2,32 @@ package main
 
 import (
 		"fmt"
-		objects "Go_chess_AI_engine/chess_objects"	
+		objects "Go_chess_AI_engine/chess_objects"
+        "net/http"
 		)
 
 func main(){
-
+    http.HandleFunc("/", handler)
+    http.ListenAndServe(":8080", nil)
+/*
 	b := objects.Board{}
 	b.New()
-    piece1 := b.Board[3][6].Piece  //  White pawn
-    piece2 := b.Board[8][6].Piece  //  black pawn
-    piece3 := b.Board[2][6].Piece  //  White king
-    piece4 := b.Board[9][6].Piece  //  black king
-
-    /*
+    piece1 := b.Board[3][5].Piece  //  White pawn
+    piece2 := b.Board[8][5].Piece  //  black pawn
+    piece3 := b.Board[2][5].Piece  //  White queen
+    piece4 := b.Board[9][5].Piece  //  black queen
     piece1_2 := b.Board[3][5].Piece  // pawn
     piece1_3 := b.Board[3][7].Piece  // pawn
     piece2 := b.Board[2][3].Piece  // knight
     piece3 := b.Board[2][2].Piece  // castle
     piece4 := b.Board[2][4].Piece  //bishop
-    */
-    piece1.Move_piece(b.Board[5][6], &b)
-    piece2.Move_piece(b.Board[6][6], &b)
-    piece3.Move_piece(b.Board[3][6], &b)
-    piece4.Move_piece(b.Board[8][6], &b)
-    piece3.Move_piece(b.Board[4][6], &b)
-    piece4.Move_piece(b.Board[7][6], &b)
-    piece3.Move_piece(b.Board[3][6], &b)
-    piece4.Move_piece(b.Board[8][6], &b)
-    /*
+
+    piece1.Move_piece(b.Board[5][5], &b)
+    piece2.Move_piece(b.Board[6][5], &b)
+    piece3.Move_piece(b.Board[4][7], &b)
+    piece4.Move_piece(b.Board[7][7], &b)
+
+    
     piece1.Move_piece(b.Board[6][2], &b)
     piece1_2.Move_piece(b.Board[4][5], &b)
     piece1_3.Move_piece(b.Board[4][7], &b)
@@ -37,8 +35,11 @@ func main(){
     piece2.Move_piece(b.Board[4][4], &b)
     piece3.Move_piece(b.Board[4][2], &b)
     piece4.Move_piece(b.Board[6][8], &b)
-    */
     printBoard(&b)	
+*/
+}
+func handler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
 func printBoard(b * objects.Board){

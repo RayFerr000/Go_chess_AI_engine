@@ -80,28 +80,28 @@ func (b *Board) New(){
                 square.Piece = &piece
                 b.Pieces = append(b.Pieces,&piece)      
             
-            }else if (i == 2 && j == 5){ //White Queen
+            }else if (i == 2 && j == 5){ //White queen
                 square := Square{ OutOfBounds : false, HasPiece : true, X : i, Y : j }
                 b.Board[i][j] = &square
                 piece := Piece{ Type : 5, Location : b.Board[i][j], IsWhite : true, Captured : false }
                 square.Piece = &piece
                 b.Pieces = append(b.Pieces,&piece)      
             
-            }else if (i == 9 && j == 5){ //Black Queen
+            }else if (i == 9 && j == 5){ //Black queen
                 square := Square{ OutOfBounds : false, HasPiece : true, X : i, Y : j }
                 b.Board[i][j] = &square
                 piece := Piece{ Type : -5, Location : b.Board[i][j], IsWhite : false, Captured : false }
                 square.Piece = &piece
                 b.Pieces = append(b.Pieces,&piece)      
             
-            }else if (i == 2 && j == 6){ //White King
+            }else if (i == 2 && j == 6){ //White king
                 square := Square{ OutOfBounds : false, HasPiece : true, X : i, Y : j }
                 b.Board[i][j] = &square
                 piece := Piece{ Type : 6, Location : b.Board[i][j], IsWhite : true, Captured : false }
                 square.Piece = &piece
                 b.Pieces = append(b.Pieces,&piece)      
             
-            }else if (i == 9 && j == 6){ //Black King
+            }else if (i == 9 && j == 6){ //Black king
                 square := Square{ OutOfBounds : false, HasPiece : true, X : i, Y : j }
                 b.Board[i][j] = &square
                 piece := Piece{ Type : -6, Location : b.Board[i][j], IsWhite : false, Captured : false }
