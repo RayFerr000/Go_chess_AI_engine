@@ -4,11 +4,14 @@ import (
 		"fmt"
 		objects "Go_chess_AI_engine/chess_objects"
         "net/http"
+        "html/template"
+        "log"
 		)
 
 func main(){
     http.HandleFunc("/", handler)
-    http.ListenAndServe(":8080", nil)
+    log.Println("Listening...")
+    http.ListenAndServe(":8000", nil)
 /*
 	b := objects.Board{}
 	b.New()
@@ -38,8 +41,9 @@ func main(){
     printBoard(&b)	
 */
 }
-func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+func handler(res http.ResponseWriter, req *http.Request) {
+    t, _ := template.ParseFiles("templates/main.html")
+    t.Execute(res,nil)
 }
 
 func printBoard(b * objects.Board){
