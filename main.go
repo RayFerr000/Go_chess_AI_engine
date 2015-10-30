@@ -9,7 +9,9 @@ import (
 		)
 
 func main(){
+    fs := http.FileServer(http.Dir("static"))
     http.HandleFunc("/", handler)
+    http.Handle("/static/", http.StripPrefix("/static/", fs))
     log.Println("Listening...")
     http.ListenAndServe(":8000", nil)
 /*
